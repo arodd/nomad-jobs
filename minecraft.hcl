@@ -32,7 +32,6 @@ job "minecraft" {
 
     # Tasks are individual units of work that are run by Nomad.
     task "vm" {
-      # This particular task starts a simple web server within a Docker container
       driver = "exec"
         config {
           args = ["-c", "cd /app/data && exec /app/latest/bedrock_server"]
