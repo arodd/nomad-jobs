@@ -6,6 +6,7 @@ job "minecraft" {
   meta {
     # User-defined key/value pairs that can be used in your jobs.
     # You can also use this meta block within Group and Task levels.
+    foo = "bar"
   }
 
   # A group defines a series of tasks that should be co-located
@@ -32,6 +33,7 @@ job "minecraft" {
 
     # Tasks are individual units of work that are run by Nomad.
     task "vm" {
+      # This particular task starts a simple web server within a Docker container
       driver = "exec"
         config {
           args = ["-c", "cd /app/data && exec /app/latest/bedrock_server"]
@@ -45,8 +47,11 @@ job "minecraft" {
          memory = 6000
        }
        artifact {
-        source      = "https://minecraft.azureedge.net/bin-linux/bedrock-server-1.21.0.03.zip"
+        source      = "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.51.02.zip"
         destination = "/app/latest"
+        headers {
+          User-Agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+        }
         # options {
         #   checksum = "sha256:abd123445ds4555555555"
         # }
@@ -59,4 +64,3 @@ job "minecraft" {
     }
   }
 }
-
