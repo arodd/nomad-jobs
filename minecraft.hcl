@@ -1,13 +1,5 @@
 job "minecraft" {
-<<<<<<< HEAD
-  datacenters = ["dc1"]
-
-  meta {
-  }
-
-=======
   datacenters = ["*"]
->>>>>>> 2aa7fdd (Updating jobs)
   group "servers" {
     count = 1
     network {
@@ -48,14 +40,9 @@ job "minecraft" {
       read_only = false
       source    = "minecraft-app"
     }
-<<<<<<< HEAD
-
-    task "vm" {
-=======
     task "server" {
       kill_timeout = "300s"
       #kill_signal = "SIGTERM"
->>>>>>> 2aa7fdd (Updating jobs)
       driver = "exec"
         config {
           args = ["--", "/bin/sh", "-c", "cd /app/data && exec /app/latest/bedrock_server"]
@@ -69,11 +56,7 @@ job "minecraft" {
          memory = 4096
        }
        artifact {
-<<<<<<< HEAD
-        source      = "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.51.02.zip"
-=======
         source      = "https://www.minecraft.net/bedrockdedicatedserver/bin-linux/bedrock-server-1.21.100.7.zip"
->>>>>>> 2aa7fdd (Updating jobs)
         destination = "/app/latest"
         headers {
           User-Agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
