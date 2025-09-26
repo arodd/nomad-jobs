@@ -1,0 +1,47 @@
+{
+  "cniVersion": "1.1.0",
+  "name": "macvlan-router",
+  "plugins": [
+    {
+      "type": "loopback"
+    },
+    {
+      "type": "macvlan",
+      "master": "eth0",
+      "mode": "bridge",
+      "ipam": {
+        "type": "dhcp",
+        "provide": [
+            {
+                "option": "host-name",
+                "fromArg": "NOMAD_JOB_NAME"
+            }
+        ]
+      }
+    },
+    {
+      "name": "ipv6_tuning",
+      "type": "tuning",
+       "sysctl": {
+         "net.ipv6.conf.all.accept_ra_rt_info_max_plen": "128",
+         "net.ipv6.conf.default.accept_ra_rt_info_max_plen": "128",
+         "net.ipv6.conf.eth0.accept_ra_rt_info_max_plen": "128",
+         "net.ipv6.conf.all.accept_ra": "2",
+         "net.ipv6.conf.eth0.accept_ra": "2",
+         "net.ipv6.conf.default.accept_ra": "2",
+         "net.ipv6.conf.all.forwarding": "1",
+         "net.ipv6.conf.eth0.forwarding": "1",
+         "net.ipv6.conf.default.forwarding": "1"
+       }
+
+    },
+    {
+      "type": "portmap",
+      "backend": "nftables",
+      "capabilities": {
+        "portMappings": true
+      },
+      "snat": true
+    }
+  ]
+}
